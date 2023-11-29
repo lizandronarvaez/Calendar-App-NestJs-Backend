@@ -60,6 +60,7 @@ export class AuthService {
     });
     return {
       user: {
+        id: user._id,
         email: user.email,
         fullname: user.fullname,
         token,
@@ -72,8 +73,13 @@ export class AuthService {
     const { id, email } = tokenIsValid;
 
     try {
+      const { _id, fullname } = await this.authModel.findOne({ email });
+
       const renewToken = this.jwtHelper.generateTokenJwt({ id, email });
+
       return {
+        id: _id,
+        fullname,
         token: renewToken,
       };
     } catch (error) {
