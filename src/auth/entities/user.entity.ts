@@ -5,7 +5,6 @@ import * as bcrypt from 'bcrypt';
 @Schema()
 export class Auth extends Document {
   @Prop({
-    unique: true,
     type: String,
     required: true,
   })
