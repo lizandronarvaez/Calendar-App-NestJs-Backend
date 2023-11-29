@@ -5,8 +5,8 @@ import {
   Body,
   Param,
   Delete,
-  Put,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { EventsService } from './events.service';
 import { CreateEventDto } from './dto/create-event.dto';
@@ -37,7 +37,7 @@ export class EventsController {
   }
 
   @UseGuards(AuthGuard('jwt'))
-  @Put(':id')
+  @Patch(':id')
   updateEvent(@Param('id') id: string, @Body() updateEventDto: UpdateEventDto) {
     return this.eventsService.update(id, updateEventDto);
   }
@@ -45,6 +45,7 @@ export class EventsController {
   @UseGuards(AuthGuard('jwt'))
   @Delete(':id')
   removeEvent(@Param('id') id: string) {
+    console.log(id);
     return this.eventsService.remove(id);
   }
 }

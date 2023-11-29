@@ -21,7 +21,6 @@ export class JwtHelper {
         secret: process.env.SECRET_KEY,
       });
 
-      //! TODO: Crear logica para reestablecer la password una vez verificamos que el token es valido
       return tokenIsValid;
     } catch (error) {
       console.log(error);
