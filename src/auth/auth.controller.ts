@@ -19,7 +19,7 @@ export class AuthController {
   }
 
   @Get('reset')
-  user_reset_token(@Headers('authorization') authorization: string) {
+  user_reset_token(@Headers('Authorization') authorization: string) {
     return this.authService.user_reset(authorization);
   }
 }
