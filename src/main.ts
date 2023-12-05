@@ -15,6 +15,7 @@ async function bootstrap() {
     }),
   );
   //! TODO:Crear configuracion de cors
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const corsOptions = {};
   app.enableCors();
   app.setGlobalPrefix('v1/api');
