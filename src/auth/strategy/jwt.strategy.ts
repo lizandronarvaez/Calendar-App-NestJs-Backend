@@ -8,10 +8,7 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(
-    @InjectModel('users')
-    private authModel: Model<Auth>,
-  ) {
+  constructor(@InjectModel('users') private authModel: Model<Auth>) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: process.env.SECRET_KEY,
@@ -19,8 +16,8 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload) {
-    const { id } = payload;
-    const user = await this.authModel.findById({ _id: id });
+    const { id: _id } = payload;
+    const user = await this.authModel.findById({ _id });
     if (!user) throw new UnauthorizedException('Token no válido');
     return user;
   }
