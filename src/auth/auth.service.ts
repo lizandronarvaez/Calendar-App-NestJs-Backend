@@ -5,13 +5,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Auth } from './entities/user.entity';
-import { LoginAuthDto } from './dto/login-auth.dto';
-import { comparePassword } from './helpers/bcrypt.helpers';
-import { JwtHelper } from './helpers/jwt.helpers';
+import { JwtHelper, comparePassword } from './helpers';
+import { CreateAuthDto, LoginAuthDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -29,6 +27,7 @@ export class AuthService {
       const token = this.jwtHelper.generateTokenJwt({
         id: result._id,
         email: result.email,
+        roles: result.roles,
       });
       return {
         user: {
@@ -53,10 +52,10 @@ export class AuthService {
     if (!passwordIsValid) {
       throw new UnauthorizedException('Contraseña incorrecta');
     }
-
     const token = this.jwtHelper.generateTokenJwt({
       id: user._id,
       email: user.email,
+      roles: user.roles,
     });
     return {
       user: {
@@ -73,9 +72,13 @@ export class AuthService {
     const { id, email } = tokenIsValid;
 
     try {
-      const { _id, fullname } = await this.authModel.findOne({ email });
+      const { _id, fullname, roles } = await this.authModel.findOne({ email });
 
-      const renewToken = this.jwtHelper.generateTokenJwt({ id, email });
+      const renewToken = this.jwtHelper.generateTokenJwt({
+        id,
+        email,
+        roles,
+      });
 
       return {
         id: _id,

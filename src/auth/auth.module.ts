@@ -32,7 +32,9 @@ import { EventSchema } from 'src/events/entities/event.entity';
       inject: [],
       useFactory: () => {
         return {
+          // secreto
           secret: process.env.SECRET_KEY,
+          // tiempo expircacion token
           signOptions: {
             expiresIn: '2h',
           },
