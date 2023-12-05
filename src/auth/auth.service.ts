@@ -5,13 +5,11 @@ import {
   NotFoundException,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Auth } from './entities/user.entity';
-import { LoginAuthDto } from './dto/login-auth.dto';
-import { comparePassword } from './helpers/bcrypt.helpers';
-import { JwtHelper } from './helpers/jwt.helpers';
+import { JwtHelper, comparePassword } from './helpers';
+import { CreateAuthDto, LoginAuthDto } from './dto';
 
 @Injectable()
 export class AuthService {
